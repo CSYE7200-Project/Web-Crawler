@@ -1,0 +1,86 @@
+# === sbt build ===
+target/
+project/project/
+project/target/
+project/.history
+project/metals.sbt
+
+# === IDE settings ===
+.idea/
+*.iml
+.bsp/
+
+# === Metals / Bloop (Scala LSP) ===
+.metals/
+.bloop/
+.scala-build/
+.worksheet/
+
+# === macOS system file ===
+.DS_Store
+
+# === VS Code ===
+.vscode/
+
+# === Logs ===
+logs/
+*.log
+
+# === Java / Scala artifact ===
+*.class
+*.jar
+*.war
+*.ear
+*.zip
+*.tar.gz
+
+# === Temporary files ===
+*.tmp
+*.bak
+*.swp
+
+# === sbt cache ===
+.cache/
+.history/
+.sbt1/
+project/plugins/project/
+project/plugins/target/
+
+# === Environment / Secrets ===
+.env
+.env.local
+.env.*
+*.secrets
+*.pem
+*.key
+*.crt
+
+# === OS cache ===
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+# === Test reports ===
+test-output/
+junit/
+surefire-reports/
+
+# === Packaging artifacts ===
+*.tgz
+*.deb
+*.rpm
+
+# === JetBrains cache ===
+.idea_modules/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+
+# === Do NOT ignore your modules ===
+!/crawler-core/
+!/crawler-master/
+!/crawler-worker/
+
+# === Logs from Pekko / Akka ===
+pekko.log
+akka.log
