@@ -6,6 +6,7 @@ lazy val commonSettings = Seq(
     libraryDependencies ++= Seq(
         "org.apache.pekko" %% "pekko-actor-typed" % "1.1.2",
         "org.apache.pekko" %% "pekko-stream" % "1.1.2",
+        "org.apache.pekko" %% "pekko-connectors-kafka" % "1.1.0",
         "ch.qos.logback" % "logback-classic" % "1.5.20",
         "org.json4s" %% "json4s-native" % "4.0.7"
     )

@@ -1,5 +1,5 @@
 package core
 
-trait SerializableMessage extends Message {
-    def toMap: Map[String, Serializable]
-}
+//trait SerializableMessage extends Message {
+//    def toMap: Map[String, Serializable]
+//}
