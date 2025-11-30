@@ -1,6 +1,7 @@
 package master
 
 import core._
+import core.protocol.JsonProtocol
 import org.apache.pekko.actor.ActorSystem
 import org.apache.pekko.kafka.ProducerSettings
 import org.apache.kafka.clients.producer.ProducerRecord

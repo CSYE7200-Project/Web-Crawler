@@ -1,6 +1,7 @@
 package demo
 
-import core.{FetchTask, JsonProtocol}
+import core.protocol.JsonProtocol
+import core.{FetchTask}
 
 object DemoMain {
     def main(args: Array[String]): Unit = {

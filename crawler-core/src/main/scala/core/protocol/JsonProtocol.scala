@@ -1,12 +1,8 @@
-package core
+package core.protocol
 
+import core.{FetchResult, FetchTask, SerializableMessage}
 import org.json4s.{DefaultFormats, Extraction}
 import org.json4s.native.JsonMethods.{compact, parse, render}
-
-trait Protocol[M <: Message] {
-    def encode(msg: M): Array[Byte]
-    def decode(bytes: Array[Byte]): M
-}
 
 object JsonProtocol extends Protocol[SerializableMessage] {
     implicit val formats: DefaultFormats.type = DefaultFormats

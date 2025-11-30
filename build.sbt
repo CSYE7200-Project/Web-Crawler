@@ -18,25 +18,25 @@ lazy val core = (project in file("crawler-core"))
         name := "crawler-core"
     )
 
-lazy val api = (project in file("crawler-api"))
-  .dependsOn(core)
-  .settings(commonSettings)
-  .settings(
-    name := "crawler-api"
-  )
-
-lazy val master = (project in file("crawler-master"))
-    .dependsOn(core)
-    .settings(commonSettings)
-    .settings(
-        name := "crawler-master"
-    )
-
 lazy val worker = (project in file("crawler-worker"))
     .dependsOn(core)
     .settings(commonSettings)
     .settings(
         name := "crawler-worker"
+    )
+
+lazy val master = (project in file("crawler-master"))
+    .dependsOn(core, worker)
+    .settings(commonSettings)
+    .settings(
+        name := "crawler-master"
+    )
+
+lazy val api = (project in file("crawler-api"))
+    .dependsOn(core)
+    .settings(commonSettings)
+    .settings(
+        name := "crawler-api"
     )
 
 lazy val root = (project in file("."))
