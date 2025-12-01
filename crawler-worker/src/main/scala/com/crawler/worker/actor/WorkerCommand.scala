@@ -1,4 +1,3 @@
-// File: crawler-worker/src/main/scala/com/crawler/worker/actor/WorkerCommand.scala
 package com.crawler.worker.actor
 
 import com.crawler.core.protocol.FetchTask

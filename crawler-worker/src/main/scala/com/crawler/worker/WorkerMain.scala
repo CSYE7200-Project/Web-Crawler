@@ -1,4 +1,3 @@
-// File: crawler-worker/src/main/scala/com/crawler/worker/WorkerMain.scala
 package com.crawler.worker
 
 import org.apache.pekko.actor.typed.ActorSystem

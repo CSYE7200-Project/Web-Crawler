@@ -1,4 +1,3 @@
-// File: crawler-core/src/main/scala/com/crawler/core/kafka/KafkaConsumerWrapper.scala
 package com.crawler.core.kafka
 
 import org.apache.kafka.clients.consumer._

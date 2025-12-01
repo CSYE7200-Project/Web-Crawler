@@ -1,4 +1,3 @@
-// File: crawler-core/src/main/scala/com/crawler/core/kafka/KafkaConfig.scala
 package com.crawler.core.kafka
 
 case class KafkaConfig(

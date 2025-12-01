@@ -1,4 +1,3 @@
-// File: crawler-master/src/main/scala/com/crawler/master/MasterMain.scala
 package com.crawler.master
 
 import org.apache.pekko.actor.typed.ActorSystem

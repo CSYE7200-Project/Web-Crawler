@@ -1,4 +1,3 @@
-// File: crawler-master/src/main/scala/com/crawler/master/state/WorkerInfo.scala
 package com.crawler.master.state
 
 case class WorkerInfo(

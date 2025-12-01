@@ -1,4 +1,3 @@
-// File: crawler-core/src/main/scala/com/crawler/core/protocol/MessageCodecs.scala
 package com.crawler.core.protocol
 
 import io.circe._
