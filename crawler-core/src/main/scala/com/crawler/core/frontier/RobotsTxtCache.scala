@@ -1,4 +1,3 @@
-// File: crawler-core/src/main/scala/com/crawler/core/frontier/RobotsTxtCache.scala
 package com.crawler.core.frontier
 
 import java.util.concurrent.ConcurrentHashMap

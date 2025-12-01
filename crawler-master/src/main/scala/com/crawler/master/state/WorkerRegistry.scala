@@ -1,4 +1,3 @@
-// File: crawler-master/src/main/scala/com/crawler/master/state/WorkerRegistry.scala
 package com.crawler.master.state
 
 import com.crawler.core.protocol.WorkerHeartbeat

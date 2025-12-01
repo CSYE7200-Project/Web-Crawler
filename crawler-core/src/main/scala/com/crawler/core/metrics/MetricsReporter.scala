@@ -1,4 +1,3 @@
-// File: crawler-core/src/main/scala/com/crawler/core/metrics/MetricsReporter.scala
 package com.crawler.core.metrics
 
 import org.slf4j.LoggerFactory

@@ -1,4 +1,3 @@
-// File: crawler-api/src/main/scala/com/crawler/api/ParsedPage.scala
 package com.crawler.api
 
 case class ParsedPage(

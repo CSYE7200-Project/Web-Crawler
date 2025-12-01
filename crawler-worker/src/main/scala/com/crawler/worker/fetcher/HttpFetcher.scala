@@ -1,4 +1,3 @@
-// File: crawler-worker/src/main/scala/com/crawler/worker/fetcher/HttpFetcher.scala
 package com.crawler.worker.fetcher
 
 import sttp.client3._

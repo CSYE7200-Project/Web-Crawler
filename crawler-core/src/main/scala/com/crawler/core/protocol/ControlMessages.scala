@@ -1,4 +1,3 @@
-// File: crawler-core/src/main/scala/com/crawler/core/protocol/ControlMessages.scala
 package com.crawler.core.protocol
 
 case class ShutdownWorker(

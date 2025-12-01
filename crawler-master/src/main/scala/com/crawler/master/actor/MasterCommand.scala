@@ -1,4 +1,3 @@
-// File: crawler-master/src/main/scala/com/crawler/master/actor/MasterCommand.scala
 package com.crawler.master.actor
 
 import com.crawler.core.protocol.{RegisterWorker, WorkerHeartbeat, FetchResult}

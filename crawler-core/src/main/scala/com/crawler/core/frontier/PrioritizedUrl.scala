@@ -1,4 +1,3 @@
-// File: crawler-core/src/main/scala/com/crawler/core/frontier/PrioritizedUrl.scala
 package com.crawler.core.frontier
 
 case class PrioritizedUrl(

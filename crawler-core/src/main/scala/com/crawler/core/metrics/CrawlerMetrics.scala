@@ -1,4 +1,3 @@
-// File: crawler-core/src/main/scala/com/crawler/core/metrics/CrawlerMetrics.scala
 package com.crawler.core.metrics
 
 import java.util.concurrent.atomic.{AtomicLong, LongAdder}

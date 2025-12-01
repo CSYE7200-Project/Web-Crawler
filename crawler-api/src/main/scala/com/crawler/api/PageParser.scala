@@ -1,4 +1,3 @@
-// File: crawler-api/src/main/scala/com/crawler/api/PageParser.scala
 package com.crawler.api
 
 import org.jsoup.Jsoup

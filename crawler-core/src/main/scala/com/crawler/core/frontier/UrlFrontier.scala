@@ -1,4 +1,3 @@
-// File: crawler-core/src/main/scala/com/crawler/core/frontier/UrlFrontier.scala
 package com.crawler.core.frontier
 
 import com.google.common.hash.{BloomFilter, Funnels}

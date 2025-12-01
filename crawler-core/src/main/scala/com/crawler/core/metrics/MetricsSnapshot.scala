@@ -1,4 +1,3 @@
-// File: crawler-core/src/main/scala/com/crawler/core/metrics/MetricsSnapshot.scala
 package com.crawler.core.metrics
 
 case class MetricsSnapshot(
