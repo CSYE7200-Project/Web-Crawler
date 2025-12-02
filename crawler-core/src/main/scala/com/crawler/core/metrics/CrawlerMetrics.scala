@@ -1,3 +1,4 @@
+// File: crawler-core/src/main/scala/com/crawler/core/metrics/CrawlerMetrics.scala
 package com.crawler.core.metrics
 
 import java.util.concurrent.atomic.{AtomicLong, LongAdder}
@@ -110,20 +111,27 @@ class CrawlerMetrics {
     errors = getErrorStats
   )
 
-  def printSummary(): Unit = {
+  def printSummary(numWorkers: Int = 1): Unit = {
     val snapshot = getSnapshot
     println("\n" + "=" * 60)
     println("           CRAWLER METRICS SUMMARY")
     println("=" * 60)
+
+    // Acceptance Criteria Metrics
+    println("\n--- ACCEPTANCE CRITERIA METRICS ---")
+    println(f"Workers:                 $numWorkers")
+    println(f"Throughput (pages/sec):  ${snapshot.crawlRatePerSecond}%.2f")
+    println(f"Average Latency (ms):    ${snapshot.avgFetchTimeMs}%.0f")
+    println(f"Total URLs Crawled:      ${snapshot.urlsCrawled}%,d")
+    println(f"Elapsed Time (sec):      ${snapshot.elapsedTimeSeconds}%d")
+
+    println("\n--- DETAILED STATS ---")
     println(f"URLs Crawled:      ${snapshot.urlsCrawled}%,d")
     println(f"  - Succeeded:     ${snapshot.urlsSucceeded}%,d")
     println(f"  - Failed:        ${snapshot.urlsFailed}%,d")
     println(f"Success Rate:      ${snapshot.successRatePercent}%.1f%%")
     println(f"Bytes Downloaded:  ${snapshot.bytesDownloaded / 1024.0 / 1024.0}%.2f MB")
     println(f"Links Extracted:   ${snapshot.linksExtracted}%,d")
-    println(f"Avg Fetch Time:    ${snapshot.avgFetchTimeMs}%.0f ms")
-    println(f"Crawl Rate:        ${snapshot.crawlRatePerSecond}%.2f URLs/sec")
-    println(f"Elapsed Time:      ${snapshot.elapsedTimeSeconds}%d seconds")
 
     if (snapshot.topDomains.nonEmpty) {
       println("\nTop Domains:")

@@ -1,3 +1,4 @@
+// File: crawler-master/src/main/scala/com/crawler/master/actor/MasterActor.scala
 package com.crawler.master.actor
 
 import org.apache.pekko.actor.typed.Behavior
@@ -23,7 +24,7 @@ object MasterActor {
            ): Behavior[MasterCommand] = {
     Behaviors.setup { context =>
       Behaviors.withTimers { timers =>
-        timers.startTimerAtFixedRate(DistributeTasks, 500.millis)
+        timers.startTimerAtFixedRate(DistributeTasks, 100.millis)  // Faster distribution
         timers.startTimerAtFixedRate(CheckWorkerHealth, 10.seconds)
         timers.startTimerAtFixedRate(PrintStatus, 30.seconds)
 
@@ -119,9 +120,14 @@ private class MasterActorImpl(
 
   private def distributeTasks(): Unit = {
     var distributed = 0
+    val maxPerCycle = 500  // Distribute more tasks per cycle
 
-    while (frontier.size > 0 && registry.getAvailableWorker.isDefined) {
-      registry.getAvailableWorker.foreach { worker =>
+    // Distribute tasks round-robin to workers, or broadcast if no workers registered yet
+    val aliveWorkers = registry.getAliveWorkers
+
+    if (aliveWorkers.isEmpty) {
+      // No workers yet, just send to Kafka for workers to pick up
+      while (frontier.size > 0 && distributed < maxPerCycle) {
         frontier.getNext.foreach { pUrl =>
           val taskId = s"task-${UUID.randomUUID().toString.take(8)}"
           val task = FetchTask(
@@ -131,21 +137,53 @@ private class MasterActorImpl(
             maxDepth = maxDepth,
             priority = pUrl.priority
           )
-
-          producer.send(KafkaTopics.Tasks, worker.workerId, task)
-          registry.assignTask(worker.workerId, taskId)
+          // Send without key - any worker can pick it up
+          producer.send(KafkaTopics.Tasks, null, task)
           totalTasksCreated += 1
           distributed += 1
         }
       }
-
-      if (distributed >= 100) {
-        return
+    } else {
+      // Distribute to available workers
+      while (frontier.size > 0 && distributed < maxPerCycle) {
+        registry.getAvailableWorker match {
+          case Some(worker) =>
+            frontier.getNext.foreach { pUrl =>
+              val taskId = s"task-${UUID.randomUUID().toString.take(8)}"
+              val task = FetchTask(
+                taskId = taskId,
+                url = pUrl.url,
+                depth = pUrl.depth,
+                maxDepth = maxDepth,
+                priority = pUrl.priority
+              )
+              // Send with null key so any consumer can get it
+              producer.send(KafkaTopics.Tasks, null, task)
+              registry.assignTask(worker.workerId, taskId)
+              totalTasksCreated += 1
+              distributed += 1
+            }
+          case None =>
+            // All workers busy, still send tasks to queue
+            frontier.getNext.foreach { pUrl =>
+              val taskId = s"task-${UUID.randomUUID().toString.take(8)}"
+              val task = FetchTask(
+                taskId = taskId,
+                url = pUrl.url,
+                depth = pUrl.depth,
+                maxDepth = maxDepth,
+                priority = pUrl.priority
+              )
+              producer.send(KafkaTopics.Tasks, null, task)
+              totalTasksCreated += 1
+              distributed += 1
+            }
+        }
       }
     }
 
     if (distributed > 0) {
-      logger.debug(s"Distributed $distributed tasks")
+      logger.debug(s"Distributed $distributed tasks (${aliveWorkers.size} workers alive)")
     }
   }
 
