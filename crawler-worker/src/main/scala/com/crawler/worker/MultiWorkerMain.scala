@@ -125,7 +125,7 @@ object MultiWorkerMain {
       println("=" * 60)
       println(s"  COMBINED METRICS FOR $numWorkers WORKERS")
       println("=" * 60)
-      combinedMetrics.printSummary()
+      combinedMetrics.printSummary(numWorkers)
 
       logger.info("All workers shutdown complete")
     }, "shutdown-hook"))

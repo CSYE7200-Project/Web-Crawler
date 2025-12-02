@@ -39,17 +39,22 @@ lazy val core = (project in file("crawler-core"))
   )
 
 lazy val master = (project in file("crawler-master"))
-  .dependsOn(core)
+  .enablePlugins(JavaAppPackaging)
+  .dependsOn(core, worker)
   .settings(
     name := "crawler-master",
-    libraryDependencies ++= commonDependencies
+    libraryDependencies ++= commonDependencies,
+    Compile / mainClass := Some("com.crawler.master.CrawlerLauncher"),
+    Universal / javaOptions := Seq("-J-Xmx2g", "-J-Xms512m")  // -J prefix for JVM opts
   )
 
 lazy val worker = (project in file("crawler-worker"))
+  .enablePlugins(JavaAppPackaging)
   .dependsOn(core, api)
   .settings(
     name := "crawler-worker",
-    libraryDependencies ++= commonDependencies
+    libraryDependencies ++= commonDependencies,
+    Compile / mainClass := Some("com.crawler.worker.WorkerMain")
   )
 
 lazy val api = (project in file("crawler-api"))
