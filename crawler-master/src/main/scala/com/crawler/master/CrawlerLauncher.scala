@@ -23,15 +23,17 @@ object CrawlerLauncher {
   private val running = new AtomicBoolean(true)
 
   def main(args: Array[String]): Unit = {
-    // Parse arguments - with debug output
-    val numWorkers = args.headOption.flatMap(s => scala.util.Try(s.toInt).toOption).getOrElse(10)
-    val concurrency = args.lift(1).flatMap(s => scala.util.Try(s.toInt).toOption).getOrElse(10)
+    // Filter out JVM options (start with -)
+    val programArgs = args.filterNot(_.startsWith("-"))
+
+    // Parse arguments
+    val numWorkers = if (programArgs.length > 0) programArgs(0).toInt else 10
+    val concurrency = if (programArgs.length > 1) programArgs(1).toInt else 10
     val totalParallelism = numWorkers * concurrency
 
     println("=" * 60)
     println("       DISTRIBUTED WEB CRAWLER")
     println("=" * 60)
-    println(s"  Args received:      ${args.mkString(", ")}")
     println(s"  Workers:            $numWorkers")
     println(s"  Concurrency/Worker: $concurrency")
     println(s"  Total Parallelism:  $totalParallelism")
@@ -172,17 +174,19 @@ object CrawlerLauncher {
       case _: InterruptedException =>
     }
 
-    // Final cleanup if we reach here normally
-    metricsReporter.stop()
-    executor.shutdown()
-    executor.awaitTermination(10, TimeUnit.SECONDS)
+    // Final cleanup if we reach here normally (not via Ctrl+C)
+    if (running.get()) {
+      metricsReporter.stop()
+      executor.shutdown()
+      executor.awaitTermination(10, TimeUnit.SECONDS)
 
-    println("\n")
-    println("=" * 60)
-    println(s"  FINAL RESULTS: $numWorkers WORKERS x $concurrency CONCURRENCY")
-    println("=" * 60)
-    metrics.printSummary(numWorkers)
-    frontier.printStats()
+      println("\n")
+      println("=" * 60)
+      println(s"  FINAL RESULTS: $numWorkers WORKERS x $concurrency CONCURRENCY")
+      println("=" * 60)
+      metrics.printSummary(numWorkers)
+      frontier.printStats()
+    }
   }
 
   private def loadSeedUrls(filename: String, frontier: UrlFrontier): Unit = {

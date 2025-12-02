@@ -45,7 +45,7 @@ lazy val master = (project in file("crawler-master"))
     name := "crawler-master",
     libraryDependencies ++= commonDependencies,
     Compile / mainClass := Some("com.crawler.master.CrawlerLauncher"),
-    Universal / javaOptions ++= Seq("-Xmx2g", "-Xms512m")
+    Universal / javaOptions := Seq("-J-Xmx2g", "-J-Xms512m")  // -J prefix for JVM opts
   )
 
 lazy val worker = (project in file("crawler-worker"))
